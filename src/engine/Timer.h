@@ -22,12 +22,12 @@
 class Timer {
 public:
 	Timer() {
-		clock_gettime( CLOCK_MONOTONIC, &clock );
+		timespec_get( &clock, TIME_UTC ); // TODO: Replace with platform independent code!
 	}
 
 	void End() {
 		struct timespec end;
-		clock_gettime( CLOCK_MONOTONIC, &end );
+		timespec_get( &end, TIME_UTC ); // TODO: Replace with platform independent code!
 		timeTaken = TimespecToDouble( TimespecSub( end, clock ) );
 	}
 

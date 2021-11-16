@@ -19,6 +19,11 @@
 
 PL_EXTERN_C
 
+PL_PACKED_STRUCT_START( No2Coord )
+	float v[ 3 ];
+	float bone_index;
+PL_PACKED_STRUCT_END( No2Coord )
+
 typedef struct No2Handle {
 	PLVector3 *normals;
 	unsigned int numNormals;

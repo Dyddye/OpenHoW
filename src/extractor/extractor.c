@@ -119,7 +119,7 @@ static void ConvertModelData( void ) {
 		}
 
 		/* Write the files out to the destination. I'm lazy and we'll delete it once we're done anyway. */
-		char model_paths[package->table_size][PL_SYSTEM_MAX_PATH];
+		char *model_paths = (char *) malloc( package->table_size * PL_SYSTEM_MAX_PATH );
 		unsigned int num_models = 0;
 		for ( unsigned int j = 0; j < package->table_size; ++j ) {
 			char out[PL_SYSTEM_MAX_PATH];
@@ -146,7 +146,7 @@ static void ConvertModelData( void ) {
 
 			const char *ext = plGetFileExtension( package->table[ j ].fileName );
 			if ( pl_strcasecmp( ext, "fac" ) == 0 ) {
-				plStripExtension( model_paths[ num_models++ ], PL_SYSTEM_MAX_PATH - 1, out );
+				plStripExtension( &model_paths[ num_models++ * PL_SYSTEM_MAX_PATH ], PL_SYSTEM_MAX_PATH - 1, out );
 			}
 		}
 
@@ -213,7 +213,7 @@ static void ConvertModelData( void ) {
 		/* and now we go through again, converting everything as we do so */
 		for ( unsigned int j = 0; j < num_models; ++j ) {
 			char fac_path[PL_SYSTEM_MAX_PATH];
-			snprintf( fac_path, PL_SYSTEM_MAX_PATH, "%s.fac", model_paths[ j ] );
+			snprintf( fac_path, PL_SYSTEM_MAX_PATH, "%s.fac", &model_paths[ j * PL_SYSTEM_MAX_PATH ] );
 			if ( !plFileExists( fac_path ) ) {
 				Error( "Failed to find FAC file, \"%s\"!\n", fac_path );
 			}
@@ -273,9 +273,10 @@ static void ConvertModelData( void ) {
 			free( table );
 
 			// write out the fac and replace it (we'll append the table to the end)
-			snprintf( fac_path, PL_SYSTEM_MAX_PATH, "%s.fac", model_paths[ j ] );
+			snprintf( fac_path, PL_SYSTEM_MAX_PATH, "%s.fac", &model_paths[ j * PL_SYSTEM_MAX_PATH] );
 			Fac_WriteFile( fac, fac_path );
 		}
+		free( model_paths );
 	}
 }
 
@@ -298,8 +299,8 @@ static void ExtractPtgPackage( const char *input_path, const char *output_path )
 	}
 
 	size_t tim_size = ( plGetLocalFileSize( input_path ) - sizeof( num_textures ) ) / num_textures;
+	uint8_t *tim = malloc( tim_size );
 	for ( unsigned int i = 0; i < num_textures; ++i ) {
-		uint8_t tim[tim_size];
 		if ( fread( tim, tim_size, 1, file ) != 1 ) {
 			Print( "Failed to read Tim, \"%d\"!\n", i );
 			continue;
@@ -313,6 +314,7 @@ static void ExtractPtgPackage( const char *input_path, const char *output_path )
 
 		ConvertImageToPng( out_path );
 	}
+	free( tim );
 
 	fclose( file );
 }
@@ -443,7 +445,7 @@ static void MergeTextureTargets( void ) {
 		}
 
 		for ( unsigned int j = 0; j < merge->num_textures; ++j ) {
-			const char *path = merge->targets[ j ].path;
+			const char *path = merge->targets[ j ].path + 1;
 			PLImage *image = plLoadImage( path );
 			if ( image == NULL ) {
 				Warning( "Failed to find image, \"%s\", for merge!\n", merge->targets[ j ].path );

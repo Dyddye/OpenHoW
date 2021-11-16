@@ -27,18 +27,18 @@
 
 JsonReader::JsonReader( const std::string &path ) : JsonReader() {
 	if ( path.empty() ) {
-		throw std::runtime_error( "Empty path for config, aborting!\n" );
+		throw std::runtime_error( "Empty path for config, aborting!" );
 	}
 
 	PLFile *filePtr = plOpenFile( path.c_str(), false );
 	if ( filePtr == nullptr ) {
-		throw std::runtime_error( "Failed to load file!\n" );
+		throw std::runtime_error( "Failed to load file!" );
 	}
 
 	size_t sz = plGetFileSize( filePtr );
 	if ( sz == 0 ) {
 		plCloseFile( filePtr );
-		throw std::runtime_error( "Failed to load file, empty config!\n" );
+		throw std::runtime_error( "Failed to load file, empty config!" );
 	}
 
 	std::vector<char> buf( sz + 1 );

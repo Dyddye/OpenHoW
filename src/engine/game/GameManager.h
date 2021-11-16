@@ -19,6 +19,7 @@
 
 #include "Actor.h"
 #include "GameModeInterface.h"
+#include <array>
 
 enum class CharacterStatus {
 	NONE = -1,

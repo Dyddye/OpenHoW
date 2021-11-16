@@ -38,11 +38,6 @@ No2Handle *No2_LoadFile( const char *path ) {
 		return NULL;
 	}
 
-	typedef struct __attribute__((packed)) No2Coord {
-		float v[3];
-		float bone_index;
-	} No2Coord;
-
 	unsigned int numNormals = ( unsigned int ) ( plGetFileSize( fp ) / sizeof( No2Coord ) );
 	No2Coord *normals = ( No2Coord * ) ohw::GetApp()->CAlloc( numNormals, sizeof( No2Coord ), true );
 	unsigned int numReadNormals = plReadFile( fp, normals, sizeof( No2Coord ), numNormals );

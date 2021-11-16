@@ -114,11 +114,11 @@ namespace ohw {
 		static void *MAlloc( size_t size, bool abortOnFail );
 		static void *CAlloc( size_t num, size_t size, bool abortOnFail );
 
-		InputManager *inputManager;
-		ModManager *modManager;
-		GameManager *gameManager;
-		AudioManager *audioManager;
-		ResourceManager *resourceManager;
+		InputManager *inputManager = nullptr;
+		ModManager *modManager = nullptr;
+		GameManager *gameManager = nullptr;
+		AudioManager *audioManager = nullptr;
+		ResourceManager *resourceManager = nullptr;
 
 		//////////////////////////////////////////////////////
 		// PROFILING
@@ -130,7 +130,7 @@ namespace ohw {
 		const ProfilerMap &GetProfilers() const { return myProfilers; }
 
 	private:
-		Display *myDisplay;
+		Display *myDisplay = nullptr;
 
 		std::vector< DisplayPreset > myDisplayPresets;
 

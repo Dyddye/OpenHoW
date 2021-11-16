@@ -135,7 +135,7 @@ ohw::ModManager::ModDescription *ohw::ModManager::GetModDescription( const char 
 		return &campaign->second;
 	}
 
-	Warning( "Failed to find mod \"%s\"!\n" );
+	Warning( "Failed to find mod \"%s\"!\n", name );
 	return nullptr;
 }
 

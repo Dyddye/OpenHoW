@@ -20,17 +20,6 @@
 #include "extractor.h"
 #include "fac.h"
 
-/************************************************************/
-/* Fac Triangle/Quad Faces Format */
-
-typedef struct FacQuad {
-	int8_t uv_coords[8];
-	uint16_t vertex_indices[4];
-	uint16_t normal_indices[4];
-	uint32_t texture_index;
-	uint16_t unknown[4];
-} FacQuad;
-
 static FacQuad *Fac_LoadQuads( PLFile *filePtr, unsigned int numQuads ) {
 	bool status = false;
 	FacQuad *quads = ( FacQuad * ) calloc( numQuads, sizeof( FacQuad ) );
@@ -212,14 +201,7 @@ void Fac_WriteFile( FacHandle *handle, const char *path ) {
 
 	// write out the triangle data
 	fwrite( &handle->num_triangles, sizeof( uint32_t ), 1, fp );
-	struct __attribute__((packed)) {
-		int8_t uv_coords[6];
-		uint16_t vertex_indices[3];
-		uint16_t normal_indices[3];
-		uint16_t unknown0;
-		uint32_t texture_index;
-		uint16_t unknown1[4];
-	} triangles[handle->num_triangles];
+	struct FacTriangle *triangles = ( struct FacTriangle * ) malloc( handle->num_triangles * sizeof( FacTriangle ) );
 	memset( triangles, 0, sizeof( *triangles ) * handle->num_triangles );
 	for ( unsigned int i = 0; i < handle->num_triangles; ++i ) {
 		triangles[ i ].texture_index = handle->triangles[ i ].texture_index;
@@ -232,6 +214,7 @@ void Fac_WriteFile( FacHandle *handle, const char *path ) {
 		}
 	}
 	fwrite( triangles, sizeof( *triangles ), handle->num_triangles, fp );
+	free( triangles );
 
 	// we won't write any quads, so just mark it as 0
 	uint32_t quads = 0;

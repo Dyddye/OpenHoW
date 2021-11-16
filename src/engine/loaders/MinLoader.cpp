@@ -37,24 +37,14 @@ MinHandle *Min_LoadFile( const char *path ) {
 		Warning( "Failed to get number of triangles, \"%s\"!\n", path );
 	}
 
-	struct __attribute__((packed)) {
-#if 0
-		int8_t      uv_coords[6];
-		uint16_t    vertex_indices[3];
-		uint16_t    normal_indices[3];
-		uint16_t    unknown0;
-		uint32_t    texture_index;
-		uint16_t    unknown1[4];
-#else
-		char u0[24];
-#endif
-	} triangles[num_triangles];
-	static_assert( sizeof( *triangles ) == 24, "invalid struct size" );
+	struct MinTriangle *triangles = ( struct MinTriangle * ) malloc( num_triangles * sizeof( FacTriangle ) );
+	static_assert( sizeof( MinTriangle ) == 24, "invalid struct size" );
 	if ( plReadFile( fp, triangles, sizeof( *triangles ), num_triangles ) != num_triangles ) {
 		plCloseFile( fp );
 		Warning( "Failed to get %u triangles, \"%s\", aborting!\n", num_triangles, path );
 		return NULL;
 	}
 	// todo
+	free( triangles );
 	return NULL;
 }

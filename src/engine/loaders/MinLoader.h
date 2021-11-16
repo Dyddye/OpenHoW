@@ -17,21 +17,24 @@
 
 #pragma once
 
-#define VTX_MAX_VERTICES  4096
-
 PL_EXTERN_C
 
-PL_PACKED_STRUCT_START( VtxCoord )
-	int16_t v[ 3 ];
-	uint16_t bone_index;
-PL_PACKED_STRUCT_END( VtxCoord )
+PL_PACKED_STRUCT_START( MinTriangle )
+#if 0
+	int8_t uv_coords[ 6 ];
+	uint16_t vertex_indices[ 3 ];
+	uint16_t normal_indices[ 3 ];
+	uint16_t unknown0;
+	uint32_t texture_index;
+	uint16_t unknown1[ 4 ];
+#else
+	char u0[ 24 ];
+#endif
+PL_PACKED_STRUCT_END( MinTriangle )
 
-typedef struct VtxHandle {
-  struct PLVertex *vertices;
-  unsigned int num_vertices;
-} VtxHandle;
-
-VtxHandle *Vtx_LoadFile(const char *path);
-void Vtx_DestroyHandle(VtxHandle *handle);
+typedef struct MinHandle {
+	unsigned int blah;
+} MinHandle;
+MinHandle *Min_LoadFile( const char *path );
 
 PL_EXTERN_C_END

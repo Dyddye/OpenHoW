@@ -53,7 +53,7 @@ namespace ohw {
 			batchedDrawCalls.push_back( transform );
 		}
 
-		PL_INLINE unsigned int GetNumberOfQueuedDraws() const {
+		PL_INLINE size_t GetNumberOfQueuedDraws() const {
 			return batchedDrawCalls.size();
 		}
 
@@ -63,7 +63,7 @@ namespace ohw {
 
 		// Mesh state
 
-		PL_INLINE unsigned int GetNumberOfMeshes() const { return meshesVector.size(); }
+		PL_INLINE size_t GetNumberOfMeshes() const { return meshesVector.size(); }
 		PLMesh *GetInternalMesh( unsigned int i );
 
 		const PLCollisionAABB &GetBounds() const { return bounds; }

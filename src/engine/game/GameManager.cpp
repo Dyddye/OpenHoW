@@ -91,7 +91,7 @@ ohw::GameManager::GameManager() {
 	plRegisterConsoleCommand( "FirstPerson", FirstPersonCommand, "Toggles the camera into first-person mode." );
 	plRegisterConsoleCommand( "FreeCam", FreeCamCommand, "Toggles the camera into fly mode." );
 
-	defaultCamera = new Camera( pl_vecOrigin3, pl_vecOrigin3 );
+	defaultCamera = new Camera( PLVector3(), PLVector3() );
 }
 
 ohw::GameManager::~GameManager() {

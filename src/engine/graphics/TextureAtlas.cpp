@@ -98,11 +98,11 @@ void ohw::TextureAtlas::Finalize() {
 		const char *extension = plGetFileExtension( image->path );
 		std::string index_name = std::string( filename ).substr( 0, strlen( filename ) - ( strlen( extension ) + 1 ) );
 		textures_.emplace( index_name, Index{
-				.x = cur_x,
-				.y = cur_y,
-				.w = image->width,
-				.h = image->height,
-				.image = image
+				cur_x,
+				cur_y,
+				image->width,
+				image->height,
+				image
 		} );
 
 		cur_x += image->width;

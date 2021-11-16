@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "../Property.h"
+#include "Property.h"
 
 enum ActorFlag {
 	ACTOR_FLAG_PLAYABLE = 1,
@@ -142,7 +142,7 @@ public:
 
 	Actor *GetParent() { return parentActor; }
 	void LinkChild( Actor *actor );
-	unsigned int GetNumOfChildren() { return childActors.size(); }
+	size_t GetNumOfChildren() { return childActors.size(); }
 	std::vector< Actor * > GetChildren() { return childActors; }
 
 	bool CheckTouching();

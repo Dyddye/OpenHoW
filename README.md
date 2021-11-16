@@ -69,10 +69,10 @@ cd OpenHoW
 git submodule update --init
 mkdir build
 cd build
-cmake ../
+cmake ..
 ```
 
-#### Windows
+#### Windows + MinGW
 
 On Windows, the project has been successfully compiled against [MinGW 64-bit](https://mingw-w64.org/doku.php/download/mingw-builds). One additional step
 you may need to perform is to download a copy of the [SDL2 development libraries](https://www.libsdl.org/release/SDL2-devel-2.0.9-mingw.tar.gz)
@@ -82,6 +82,23 @@ After you've downloaded these files, place the 'include' and 'lib' directories u
 in a new 'SDL2' directory under 'src/3rdparty'.
 
 This will be changing at a later point to make things a little easier.
+
+#### Windows + vcpkg
+
+```
+cd C:\
+git clone https://github.com/Microsoft/vcpkg.git
+.\vcpkg\bootstrap-vcpkg.bat -disableMetrics
+vcpkg.exe install sdl2:x64-windows openal-soft:x64-windows glew:x64-windows
+```
+
+```
+git clone https://github.com/TalonBraveInfo/OpenHoW.git
+cd OpenHoW
+git submodule update --init imgui platform
+cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+```
+
 
 #### C/C++ Style Guide
 

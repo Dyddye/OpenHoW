@@ -248,7 +248,7 @@ class VectorStringProperty : public Property {
   std::string Serialise() const override {
     std::string value;
     for(const auto& i : value_) {
-      uint32_t l = i.length();
+      size_t l = i.length();
       value += std::string((const char*)(&l), sizeof(l)) + i;
     }
     return value;

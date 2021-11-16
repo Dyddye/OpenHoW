@@ -27,6 +27,10 @@ For more information, please refer to <http://unlicense.org>
 
 project(OpenHoW)
 
+find_package(SDL2 CONFIG REQUIRED)
+find_package(OpenAL CONFIG REQUIRED)
+find_package(GLEW REQUIRED)
+
 add_definitions(
         "-DIMGUI_IMPL_OPENGL_LOADER_GLEW"   # Required for OpenGL3.x imgui setup
 )
@@ -76,20 +80,7 @@ target_include_directories(OpenHoW PRIVATE
 target_link_libraries(OpenHoW platform)
 
 if (WIN32)
-    add_dependencies(OpenHoW OpenAL)
-
-    target_include_directories(OpenHoW PRIVATE
-            ../3rdparty/SDL2/include/
-            ../3rdparty/openal-soft/include/
-            # below is hack to get imgui compiled on Windows with GLEW.
-            ../3rdparty/platform/platform/3rdparty/glew-2.2.0/include/
-            )
-    target_link_directories(OpenHoW PRIVATE
-            ../3rdparty/SDL2/lib/
-            ../3rdparty/openal-soft/lib/
-            ../../lib/)
-    target_link_options(OpenHoW PRIVATE -mwindows)
-    target_link_libraries(OpenHoW -Wl,-Bstatic SDL2 OpenAL32 stdc++ winpthread -Wl,-Bdynamic -static-libstdc++ -static-libgcc
+    target_link_libraries(OpenHoW SDL2::SDL2 SDL2::SDL2main OpenAL::OpenAL GLEW::GLEW
             # Window Libraries
             Version SetupAPI Winmm Imm32)
 elseif (APPLE)
@@ -98,9 +89,9 @@ elseif (APPLE)
     target_link_libraries(OpenHoW OpenAL SDL2)
 elseif (UNIX)
     target_link_libraries(OpenHoW openal SDL2 pthread dl)
+    target_compile_options(OpenHoW PUBLIC -fPIC)
 else ()
     message("Unsupported platform!")
 endif ()
 
-target_compile_options(OpenHoW PUBLIC -fPIC)
 target_include_directories(OpenHoW PUBLIC ../3rdparty/imgui/ script/duktape-2.2.0/)

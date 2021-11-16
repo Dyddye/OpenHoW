@@ -44,39 +44,5 @@
 #include "FacLoader.h"
 #include "VtxLoader.h"
 #include "No2Loader.h"
-
-typedef enum HirSkeletonBone {
-	PELVIS = 0,
-	SPINE,
-	HEAD,
-
-	UPPER_ARM_L,
-	LOWER_ARM_L,
-	HAND_L,
-
-	UPPER_ARM_R,
-	LOWER_ARM_R,
-	HAND_R,
-
-	UPPER_LEG_L,
-	LOWER_LEG_L,
-	FOOT_L,
-
-	UPPER_LEG_R,
-	LOWER_LEG_R,
-	FOOT_R,
-
-	MAX_BONES
-} HirSkeletonBone;
-
-typedef struct HirHandle {
-	PLModelBone *bones;
-	unsigned int num_bones;
-} HirHandle;
-HirHandle *Hir_LoadFile( const char *path );
-void Hir_DestroyHandle( HirHandle *handle );
-
-typedef struct MinHandle {
-	unsigned int blah;
-} MinHandle;
-MinHandle *Min_LoadFile( const char *path );
+#include "HirLoader.h"
+#include "MinLoader.h"

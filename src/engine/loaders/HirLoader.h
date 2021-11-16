@@ -17,21 +17,42 @@
 
 #pragma once
 
-#define VTX_MAX_VERTICES  4096
+/************************************************************/
+/* Hir Skeleton Format */
 
-PL_EXTERN_C
+PL_PACKED_STRUCT_START( HirBone )
+	int32_t parent;
+	int16_t coords[ 3 ];
+	int8_t unknown[ 10 ];
+PL_PACKED_STRUCT_END( HirBone )
 
-PL_PACKED_STRUCT_START( VtxCoord )
-	int16_t v[ 3 ];
-	uint16_t bone_index;
-PL_PACKED_STRUCT_END( VtxCoord )
+typedef enum HirSkeletonBone {
+	PELVIS = 0,
+	SPINE,
+	HEAD,
 
-typedef struct VtxHandle {
-  struct PLVertex *vertices;
-  unsigned int num_vertices;
-} VtxHandle;
+	UPPER_ARM_L,
+	LOWER_ARM_L,
+	HAND_L,
 
-VtxHandle *Vtx_LoadFile(const char *path);
-void Vtx_DestroyHandle(VtxHandle *handle);
+	UPPER_ARM_R,
+	LOWER_ARM_R,
+	HAND_R,
 
-PL_EXTERN_C_END
+	UPPER_LEG_L,
+	LOWER_LEG_L,
+	FOOT_L,
+
+	UPPER_LEG_R,
+	LOWER_LEG_R,
+	FOOT_R,
+
+	MAX_BONES
+} HirSkeletonBone;
+
+typedef struct HirHandle {
+	PLModelBone *bones;
+	unsigned int num_bones;
+} HirHandle;
+HirHandle *Hir_LoadFile( const char *path );
+void Hir_DestroyHandle( HirHandle *handle );

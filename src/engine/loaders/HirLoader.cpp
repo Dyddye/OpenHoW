@@ -36,14 +36,8 @@ HirHandle *Hir_LoadFile( const char *path ) {
 		return nullptr;
 	}
 
-	typedef struct __attribute__((packed)) HirBone {
-		int32_t parent;
-		int16_t coords[3];
-		int8_t unknown[10];
-	} HirBone;
-
 	auto num_bones = ( unsigned int ) ( hir_size / sizeof( HirBone ) );
-	HirBone bones[num_bones];
+	HirBone bones[ MAX_BONES ];
 	unsigned int rnum_bones = plReadFile( file, bones, sizeof( HirBone ), num_bones );
 	plCloseFile( file );
 

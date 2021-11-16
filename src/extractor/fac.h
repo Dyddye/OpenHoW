@@ -19,14 +19,25 @@
 
 PL_EXTERN_C
 
-typedef struct FacTriangle {
+/************************************************************/
+/* Fac Triangle/Quad Faces Format */
+
+PL_PACKED_STRUCT_START( FacTriangle )
 	int8_t uv_coords[6];
 	uint16_t vertex_indices[3];
 	uint16_t normal_indices[3];
 	uint16_t unknown0;
 	uint32_t texture_index;
 	uint16_t unknown1[4];
-} FacTriangle;
+PL_PACKED_STRUCT_END( FacTriangle )
+
+PL_PACKED_STRUCT_START( FacQuad )
+	int8_t uv_coords[8];
+	uint16_t vertex_indices[4];
+	uint16_t normal_indices[4];
+	uint32_t texture_index;
+	uint16_t unknown[4];
+PL_PACKED_STRUCT_END( FacQuad )
 
 typedef struct FacTextureIndex {
 	char name[16];

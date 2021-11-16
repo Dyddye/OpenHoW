@@ -25,8 +25,10 @@
 
 ActorSet ActorManager::actorsList;
 std::vector< Actor * > ActorManager::destructionQueue;
-std::map< std::string, ActorManager::actor_ctor_func > ActorManager::actorClassesRegistry
-		__attribute__((init_priority (1000)));
+std::map< std::string, ActorManager::actor_ctor_func >& ActorManager::actorClassesRegistry() {
+	static std::map< std::string, ActorManager::actor_ctor_func > actorClassesRegistry;
+	return actorClassesRegistry;
+}
 
 Actor *ActorManager::CreateActor( const std::string &identifier, const ActorSpawn &spawnData ) {
 	auto spawn = actorSpawnsRegistry.find( identifier );
@@ -36,8 +38,8 @@ Actor *ActorManager::CreateActor( const std::string &identifier, const ActorSpaw
 		return nullptr;
 	}
 
-	auto classSpawn = actorClassesRegistry.find( spawn->second.className );
-	if ( classSpawn == actorClassesRegistry.end() ) {
+	auto classSpawn = actorClassesRegistry().find( spawn->second.className );
+	if ( classSpawn == actorClassesRegistry().end() ) {
 		Error( "Invalid class name \"%s\" provided for actor \"%s\"!\n",
 		 spawn->second.className.c_str(),
 		 spawn->second.identifier.c_str() );
@@ -179,9 +181,9 @@ void ActorManager::RegisterActorManifest( const char *path, void *userPtr ) {
 
 ActorManager::ActorClassRegistration::ActorClassRegistration( const std::string &name, actor_ctor_func ctor_func )
 		: name_( name ) {
-	ActorManager::actorClassesRegistry[ name ] = ctor_func;
+	ActorManager::actorClassesRegistry()[ name ] = ctor_func;
 }
 
 ActorManager::ActorClassRegistration::~ActorClassRegistration() {
-	ActorManager::actorClassesRegistry.erase( name_ );
+	ActorManager::actorClassesRegistry().erase( name_ );
 }

@@ -387,7 +387,7 @@ const AudioSample *AudioManager::CacheSample( const std::string &path, bool pres
 		}
 
 		// Allocate buffer
-		int len = plGetFileSize( wavFile );
+		size_t len = plGetFileSize( wavFile );
 		uint8_t *buf = static_cast<uint8_t *>(u_alloc( len, 1, true ));
 
 		// For now, read the whole thing into memory
@@ -440,7 +440,7 @@ const AudioSample *AudioManager::CacheSample( const std::string &path, bool pres
 		}
 
 		// Allocate buffer
-		int len = plGetFileSize( oggFile );
+		size_t len = plGetFileSize( oggFile );
 		uint8_t *buf = static_cast<uint8_t *>(u_alloc( len, 1, true ));
 
 		// For now, read the whole thing into memory (todo: stream!!!)

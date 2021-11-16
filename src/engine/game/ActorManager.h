@@ -17,6 +17,9 @@
 
 #pragma once
 
+#include <map>
+#include <string>
+
 class Actor;
 
 typedef std::set< Actor * > ActorSet;
@@ -31,7 +34,8 @@ struct ActorSpawnManifest {
 class ActorManager {
 protected:
 	typedef Actor *(*actor_ctor_func)();
-	static std::map< std::string, actor_ctor_func > actorClassesRegistry;
+	// actor classes registry singleton getter
+	static std::map< std::string, actor_ctor_func >& actorClassesRegistry();
 
 public:
 	static ActorManager *GetInstance() {
@@ -72,8 +76,15 @@ private:
 	static std::vector< Actor * > destructionQueue;
 };
 
+#if 0
 #define REGISTER_ACTOR( NAME, CLASS ) \
     static Actor * NAME ## _make() { return new CLASS (); } \
     static ActorManager::ActorClassRegistration __attribute__ ((init_priority(2000))) \
     _reg_actor_ ## NAME ## _name((#NAME), NAME ## _make); // NOLINT(cert-err58-cpp)
+#else
+#define REGISTER_ACTOR( NAME, CLASS ) \
+    static Actor * NAME ## _make() { return new CLASS(); } \
+    static ActorManager::ActorClassRegistration _reg_actor_ ## NAME ## _name(#NAME, NAME ## _make ); // NOLINT(cert-err58-cpp)
+#endif
+
 #define REGISTER_ACTOR_BASIC( CLASS ) REGISTER_ACTOR( CLASS, CLASS )

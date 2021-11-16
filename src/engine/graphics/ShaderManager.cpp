@@ -19,8 +19,12 @@
 #include "JsonReader.h"
 #include "ShaderManager.h"
 
-static std::map< std::string, ohw::ShaderProgram * > programs;
-static ohw::ShaderProgram *fallbackShaderProgram = nullptr;
+// shader program singleton getter
+static std::map< std::string, ohw::ShaderProgram * >& programs() {
+	static std::map< std::string, ohw::ShaderProgram * > programs;
+	return programs;
+}
+	static ohw::ShaderProgram *fallbackShaderProgram = nullptr;
 
 // For resetting following rebuild
 static std::string lastProgramName;
@@ -76,19 +80,19 @@ static void Shaders_CacheShaderProgram( const char *path, void *userData ) {
 		}
 
 		ohw::ShaderProgram *program = new ohw::ShaderProgram( vertPath, fragPath );
-		programs.insert( std::pair< std::string, ohw::ShaderProgram * >( shortFileName, program ) );
+		programs().insert( std::pair< std::string, ohw::ShaderProgram * >( shortFileName, program ) );
 	} catch ( const std::exception &error ) {
 		Warning( "Failed to register shader program (%s)!\n", error.what() );
 	}
 }
 
 static void Shaders_ClearPrograms() {
-	for ( const auto &program : programs ) {
+	for ( const auto &program : programs() ) {
 		program.second->Disable();
 		delete program.second;
 	}
 
-	programs.clear();
+	programs().clear();
 }
 
 static void Shaders_CachePrograms() {
@@ -104,7 +108,7 @@ static void Cmd_ListShaderPrograms( unsigned int argc, char *argv[] ) {
 	u_unused( argv );
 
 	std::string list = "\n";
-	for ( const auto &program : programs ) {
+	for ( const auto &program : programs() ) {
 		list += program.first + "\n";
 	}
 
@@ -122,7 +126,7 @@ static void Cmd_RebuildShaderPrograms( unsigned int argc, char *argv[] ) {
 	u_unused( argc );
 	u_unused( argv );
 
-	for ( const auto &program : programs ) {
+	for ( const auto &program : programs() ) {
 		try {
 			program.second->Rebuild();
 		} catch ( const std::exception &exception ) {
@@ -174,8 +178,8 @@ void Shaders_Shutdown() {
 }
 
 ohw::ShaderProgram *Shaders_GetProgram( const std::string &name ) {
-	const auto &i = programs.find( name );
-	if ( i == programs.end() ) {
+	const auto &i = programs().find( name );
+	if ( i == programs().end() ) {
 		Warning( "Failed to find shader program, \"%s\"!\n", name.c_str() );
 		return nullptr;
 	}

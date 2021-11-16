@@ -34,10 +34,6 @@ VtxHandle *Vtx_LoadFile( const char *path ) {
 
 	/* load in the vertices */
 
-	typedef struct __attribute__((packed)) VtxCoord {
-		int16_t v[3];
-		uint16_t bone_index;
-	} VtxCoord;
 	unsigned int num_vertices = ( unsigned int ) ( plGetFileSize( vtx_file ) / sizeof( VtxCoord ) );
 	if ( num_vertices >= VTX_MAX_VERTICES ) {
 		plCloseFile( vtx_file );
@@ -45,7 +41,7 @@ VtxHandle *Vtx_LoadFile( const char *path ) {
 		return NULL;
 	}
 
-	VtxCoord vertices[num_vertices];
+	VtxCoord vertices[ VTX_MAX_VERTICES ];
 	unsigned int rnum_vertices = plReadFile( vtx_file, vertices, sizeof( VtxCoord ), num_vertices );
 	plCloseFile( vtx_file );
 
