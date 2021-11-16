@@ -2,7 +2,7 @@
 
 ### Most MAD & MTD packages follow the "named structure"
 ```c
-foreach(namedFileInfo) //sizeof = 24
+foreach(namedFileInfo) // sizeof = 24
 {
     16  char[]  entry.Name
     4   int     entry.DataOffset  // within this file.
@@ -14,9 +14,9 @@ foreach(namedFileInfo) //sizeof = 24
 
 ### "mcap.mad" follows the "raw structure"
 ```c
-foreach(rawFileInfo) //sizeof = 8
+foreach(rawFileInfo) // sizeof = 8
 {
-    4   int     entry.DataOffset  //within this file.
+    4   int     entry.DataOffset  // within this file.
     4   int     entry.DataSize
 }
 // DATA

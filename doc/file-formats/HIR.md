@@ -3,17 +3,17 @@
 Skeleton used for pigs
 
 ```c
-foreach(bone) //sizeof = 20
+foreach(bone) // sizeof = 20
 {
     4   int     bone.ParentIndex
 
-    //Transform16
+    // Transform16
     2   short   bone.Transform.X
     2   short   bone.Transform.Y
     2   short   bone.Transform.Z
-    2   short   bone.Transform.W    //padding
+    2   short   bone.Transform.W    // padding
 
-    //Rotation16
+    // Rotation16
     2   short   bone.Rotation.X
     2   short   bone.Rotation.Y
     2   short   bone.Rotation.Z

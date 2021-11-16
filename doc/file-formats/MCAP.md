@@ -3,7 +3,7 @@
 .mcap are extracted from mcap.mad
 
 ```c
-foreach(keyframe) //sizeof = 272
+foreach(keyframe) // sizeof = 272
 {
     // World space transform
     // Transform32 (PSX uses Transform16)
@@ -17,12 +17,12 @@ foreach(keyframe) //sizeof = 272
     4   int objectTransform.X
     4   int objectTransform.Y
     4   int objectTransform.Z
-    4   int objectTransform.W   // padding
+    4   int objectTransform.W  // padding
     
-    foreach(boneRotation) //sizeof = 15
+    foreach(boneRotation) // sizeof = 15
     {        
         // Bone quaterion rotation
-        //Rotation32 (PSX uses Rotation16)
+        // Rotation32 (PSX uses Rotation16)
         4   float   rotation.X
         4   float   rotation.Y
         4   float   rotation.Z
@@ -46,6 +46,6 @@ struct CaptureRotation {
 struct CaptureFrame {
     uint16_t        Root[4];    // xyz(pad)
     uint16_t        Object[4];  // xyz(pad)
-	CaptureRotation pt[15];
+    CaptureRotation pt[15];
 };
 ```

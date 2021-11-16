@@ -6,7 +6,7 @@
 foreach(triangle) // sizeof = 32
 {
     1   char   triangle.U_A             // U component for Vertex_A
-    1   char   triangle.V_A             // U component for Vertex_A
+    1   char   triangle.V_A             // V component for Vertex_A
 
     1   char   triangle.U_B             // U component for Vertex_B
     1   char   triangle.V_B             // V component for Vertex_B
@@ -33,10 +33,10 @@ foreach(triangle) // sizeof = 32
 }
 
 4   int    planeCount
-foreach(plane)   //36 bytes per plane
+foreach(plane)   // 36 bytes per plane
 {
     1   char   plane.U_A                // U component for Vertex_A
-    1   char   plane.V_A                // U component for Vertex_A
+    1   char   plane.V_A                // V component for Vertex_A
 
     1   char   plane.U_B                // U component for Vertex_B
     1   char   plane.V_B                // V component for Vertex_B

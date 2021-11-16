@@ -5,8 +5,8 @@
 2   ushort  objectCount
 for(int iObject = 0; iObject < objectCount; iObject++) // sizeof = 94
 {
-    16  char[]  obj.Name                //Model name
-    16  char[]  obj.NULL                //"NULL"
+    16  char[]  obj.Name                // Model name
+    16  char[]  obj.NULL                // "NULL"
     2   short   obj.XOffset
     2   short   obj.YOffset
     2   short   obj.ZOffset
@@ -27,6 +27,8 @@ for(int iObject = 0; iObject < objectCount; iObject++) // sizeof = 94
     2   short   obj.BoundingBoxType
         
     1   short   obj.Short0
+    // - SPAWN_IN_PLACE = 0x3F
+    // - SPAWN_PARACHUTE = 0x7F
     1   char    obj.Byte0
 
     // PigTeam:
@@ -57,7 +59,7 @@ for(int iObject = 0; iObject < objectCount; iObject++) // sizeof = 94
     2   short   obj.ScriptType
 
     1   char    obj.ScriptGroup    
-    19  char[]  obj.ScriptParamters
+    19  char[]  obj.ScriptParameters
     2   short   obj.ScriptXOffset
     2   short   obj.ScriptYOffset
     2   short   obj.ScriptZOffset

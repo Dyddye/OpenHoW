@@ -1,7 +1,7 @@
 # NO2 - Model normals
 
 ```c
-foreach(normal) //sizeof = 16
+foreach(normal) // sizeof = 16
 {
     4   float   normal.X
     4   float   normal.Y
