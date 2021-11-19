@@ -84,9 +84,7 @@ if (WIN32)
             # Window Libraries
             Version SetupAPI Winmm Imm32)
 elseif (APPLE)
-    target_include_directories(OpenHoW PRIVATE
-            ../3rdparty/platform/platform/3rdparty/glew-2.2.0/include/)
-    target_link_libraries(OpenHoW OpenAL SDL2)
+    target_link_libraries(OpenHoW SDL2::SDL2 SDL2::SDL2main OpenAL::OpenAL GLEW::GLEW)
 elseif (UNIX)
     target_link_libraries(OpenHoW openal SDL2 pthread dl)
     target_compile_options(OpenHoW PUBLIC -fPIC)

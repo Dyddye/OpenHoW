@@ -66,10 +66,9 @@ Once compiled, you need to use the [extraction](https://github.com/TalonBraveInf
 ```
 git clone https://github.com/TalonBraveInfo/OpenHoW.git
 cd OpenHoW
-git submodule update --init
-mkdir build
+git submodule update --init src/3rdparty/imgui src/3rdparty/platform
+cmake -B build -S .
 cd build
-cmake ..
 ```
 
 #### Windows + MinGW
@@ -95,10 +94,28 @@ vcpkg.exe install sdl2:x64-windows openal-soft:x64-windows glew:x64-windows
 ```
 git clone https://github.com/TalonBraveInfo/OpenHoW.git
 cd OpenHoW
-git submodule update --init imgui platform
+git submodule update --init src/3rdparty/imgui src/3rdparty/platform
 cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
 ```
 
+### macOS + homebrew
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
+brew analytics off
+brew install cmake sdl2 openal-soft glew
+```
+
+```
+git clone https://github.com/TalonBraveInfo/OpenHoW.git
+cd OpenHoW
+git submodule update --init src/3rdparty/imgui src/3rdparty/platform
+cmake -B build -S . -DCMAKE_PREFIX_PATH=/usr/local/Cellar/openal-soft/1.21.1/lib/cmake/OpenAL # make
+#cmake -B build -S . -G Xcode -DCMAKE_PREFIX_PATH=/usr/local/Cellar/openal-soft/1.21.1/lib/cmake/OpenAL # Xcode
+cd build
+make # make
+#open openhow.xcodeproject # Xcode
+```
 
 #### C/C++ Style Guide
 
